@@ -1,4 +1,4 @@
-.game-board {
+#game-board {
     width: 600px;
     margin: 20px auto;
 }
@@ -10,7 +10,8 @@
 
 .card {
     margin: 10px;
-    background-color: teal;
+    background-color: rgb(17, 17, 110);
+    color: white;
     width: 130px;
     height: 130px;
     text-align:center;
@@ -19,4 +20,8 @@
 .card::before {
     position: relative;
     top: 25px;
+}
+
+.card.selected {
+    background-color: rgb(197, 23, 23);
 }

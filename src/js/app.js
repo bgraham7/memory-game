@@ -3,6 +3,7 @@ function Game() {
 
     this.intializeBoard = function() {
         createBoard();
+        hookUpClickEvents();
     }
 
     createBoard = function() {
@@ -37,7 +38,7 @@ function Game() {
     createBoardInDom = function(board) {
         var contentHolder = document.getElementById('content');
         const boardDiv = document.createElement('div');
-        boardDiv.className = 'game-board';
+        boardDiv.id = 'game-board';
         board.forEach(row => {
             const rowDiv = document.createElement('div');
             rowDiv.className = 'card-row';
@@ -49,6 +50,16 @@ function Game() {
             boardDiv.appendChild(rowDiv);
         });
         contentHolder.appendChild(boardDiv);
+    }
+
+    hookUpClickEvents = function() {
+        var board = document.getElementById('game-board');
+        board.addEventListener('click', function(e) {
+            if(!e.target.className.includes('card') || e.target.className.includes('selected')){
+                return;
+            }
+            e.target.classList.add("selected");
+        });
     }
 }
 
