@@ -84,10 +84,10 @@ function Game() {
     
     clickHandler = function(e) {
         const selectedCard = e.target.closest('.card');
-        if(!selectedCard.className.includes('card') || selectedCard.className.includes('show')){
+        if(selectedCard.className.includes('show')){
             return;
         }
-        
+
         boardDiv.removeEventListener('click', clickHandler);
         selectedCard.classList.add("show");
 
@@ -101,8 +101,12 @@ function Game() {
             const secondType = selectedCard.dataset.type;
             if( firstType === secondType) {
                 state.matches++;
-                console.log(state.matches);
                 firstCardPick = null;
+                if(state.matches == 8) {
+                    var modal = document.getElementById('modal');
+                    modal.classList.add('open');
+                }
+
                 boardDiv.addEventListener('click', clickHandler);
             } else {
                 setTimeout(function() {
