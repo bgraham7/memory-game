@@ -2,23 +2,12 @@ function Game() {
     this.board = [];
 
     this.intializeBoard = function() {
+        createBoard();
+    }
 
-        var contentHolder = document.getElementById('content')
-
-        this.board = createInMemoryBoard();
-        const boardDiv = document.createElement('div');
-        boardDiv.className = 'game-board';
-        this.board.forEach(row => {
-            const rowDiv = document.createElement('div');
-            rowDiv.className = 'card-row';
-            row.forEach(card => {
-                const cardDiv = document.createElement('div');
-                cardDiv.className = `card fa ${card} fa-4x`;
-                rowDiv.appendChild(cardDiv);
-            });
-            boardDiv.appendChild(rowDiv);
-        });
-        contentHolder.appendChild(boardDiv);
+    createBoard = function() {
+        const inMemoryBoard = createInMemoryBoard();
+        createBoardInDom(inMemoryBoard);
     }
 
     createInMemoryBoard = function() {
@@ -43,6 +32,23 @@ function Game() {
             [a[i], a[j]] = [a[j], a[i]];
         }
         return a;
+    }
+
+    createBoardInDom = function(board) {
+        var contentHolder = document.getElementById('content');
+        const boardDiv = document.createElement('div');
+        boardDiv.className = 'game-board';
+        board.forEach(row => {
+            const rowDiv = document.createElement('div');
+            rowDiv.className = 'card-row';
+            row.forEach(card => {
+                const cardDiv = document.createElement('div');
+                cardDiv.className = `card fa ${card} fa-4x`;
+                rowDiv.appendChild(cardDiv);
+            });
+            boardDiv.appendChild(rowDiv);
+        });
+        contentHolder.appendChild(boardDiv);
     }
 }
 
