@@ -51,8 +51,20 @@ function Game() {
             rowDiv.className = 'card-row';
             row.forEach(card => {
                 const cardDiv = document.createElement('div');
-                cardDiv.className = `card fa ${card} fa-4x`;
+                cardDiv.className = "card";
                 cardDiv.dataset.type = card;
+
+                const flipper = document.createElement('div');
+                flipper.className = 'flipper';
+                const front = document.createElement('div');
+                front.className = `front fa ${card} fa-4x`;
+                flipper.appendChild(front);
+                const back = document.createElement('div');
+                back.className = 'back';
+                flipper.appendChild(back);
+
+                cardDiv.appendChild(flipper);
+
                 rowDiv.appendChild(cardDiv);
             });
             boardDiv.appendChild(rowDiv);
@@ -71,16 +83,16 @@ function Game() {
     firstCardPick = null;
     
     clickHandler = function(e) {
-        const selectedCard = e.target;
+        const selectedCard = e.target.closest('.card');
         if(!selectedCard.className.includes('card') || selectedCard.className.includes('show')){
             return;
         }
-
+        
         boardDiv.removeEventListener('click', clickHandler);
         selectedCard.classList.add("show");
 
         if (firstCardPick == null) {
-            firstCardPick = e.target;
+            firstCardPick = selectedCard;
             boardDiv.addEventListener('click', clickHandler);
         } else {
             state.turns++;
@@ -89,6 +101,7 @@ function Game() {
             const secondType = selectedCard.dataset.type;
             if( firstType === secondType) {
                 state.matches++;
+                console.log(state.matches);
                 firstCardPick = null;
                 boardDiv.addEventListener('click', clickHandler);
             } else {
