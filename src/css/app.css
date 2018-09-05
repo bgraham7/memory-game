@@ -1,0 +1,20 @@
+.game-board {
+    width: 600px;
+    margin: 20px auto;
+}
+
+.card-row {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.card {
+    margin: 10px;
+    background-color: teal;
+    width: 130px;
+    height: 130px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
