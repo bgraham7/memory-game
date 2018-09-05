@@ -72,21 +72,27 @@ function Game() {
         }
 
         boardDiv.removeEventListener('click', clickHandler);
-
         selectedCard.classList.add("show");
 
         if (firstCardPick == null) {
             firstCardPick = e.target;
+            boardDiv.addEventListener('click', clickHandler);
         } else {
             const firstType = firstCardPick.dataset.type;
             const secondType = selectedCard.dataset.type;
             if( firstType === secondType) {
                 console.log('match');
+                firstCardPick = null;
+                boardDiv.addEventListener('click', clickHandler);
             } else {
-                console.log('wrong');
+                setTimeout(function() {
+                    firstCardPick.classList.remove("show");
+                    selectedCard.classList.remove("show");
+                    firstCardPick = null;
+                    boardDiv.addEventListener('click', clickHandler);
+                }, 800);
             }
         }
-        boardDiv.addEventListener('click', clickHandler);
     }
 }
 
