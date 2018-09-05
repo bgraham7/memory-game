@@ -35,6 +35,8 @@ function Game() {
         return a;
     }
 
+    boardDiv = null;
+
     createBoardInDom = function(board) {
         var contentHolder = document.getElementById('content');
         const boardDiv = document.createElement('div');
@@ -53,31 +55,38 @@ function Game() {
         contentHolder.appendChild(boardDiv);
     }
 
-    firstCardPick = null;
+    
 
     /* Click Event */
     hookUpClickEvents = function() {
-        var board = document.getElementById('game-board');
-        board.addEventListener('click', function(e) {
+        boardDiv = document.getElementById('game-board');
+        boardDiv.addEventListener('click', clickHandler);
+    }
 
-            const selectedCard = e.target;
-            if(!selectedCard.className.includes('card') || selectedCard.className.includes('show')){
-                return;
-            }
-            selectedCard.classList.add("show");
+    firstCardPick = null;
+    
+    clickHandler = function(e) {
+        const selectedCard = e.target;
+        if(!selectedCard.className.includes('card') || selectedCard.className.includes('show')){
+            return;
+        }
 
-            if (firstCardPick == null) {
-                firstCardPick = e.target;
+        boardDiv.removeEventListener('click', clickHandler);
+
+        selectedCard.classList.add("show");
+
+        if (firstCardPick == null) {
+            firstCardPick = e.target;
+        } else {
+            const firstType = firstCardPick.dataset.type;
+            const secondType = selectedCard.dataset.type;
+            if( firstType === secondType) {
+                console.log('match');
             } else {
-                const firstType = firstCardPick.dataset.type;
-                const secondType = selectedCard.dataset.type;
-                if( firstType === secondType) {
-                    console.log('match');
-                } else {
-                    console.log('wrong');
-                }
+                console.log('wrong');
             }
-        });
+        }
+        boardDiv.addEventListener('click', clickHandler);
     }
 }
 
