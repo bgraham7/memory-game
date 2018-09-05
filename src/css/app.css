@@ -25,3 +25,10 @@
 .card.show {
     background-color: rgb(197, 23, 23);
 }
+
+.stats {
+    display: flex;
+    justify-content: center;
+    font-size: 1.3em;
+    font-weight:bold;
+}

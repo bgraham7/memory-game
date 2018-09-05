@@ -1,5 +1,10 @@
 function Game() {
 
+    state = {
+        turns: 0,
+        matches: 0
+    }
+
     this.intializeBoard = function() {
         createBoard();
         hookUpClickEvents();
@@ -78,10 +83,12 @@ function Game() {
             firstCardPick = e.target;
             boardDiv.addEventListener('click', clickHandler);
         } else {
+            state.turns++;
+            updateDomWithState();
             const firstType = firstCardPick.dataset.type;
             const secondType = selectedCard.dataset.type;
             if( firstType === secondType) {
-                console.log('match');
+                state.matches++;
                 firstCardPick = null;
                 boardDiv.addEventListener('click', clickHandler);
             } else {
@@ -93,6 +100,10 @@ function Game() {
                 }, 800);
             }
         }
+    }
+
+    updateDomWithState = function() {
+        document.getElementById('turns').innerText = state.turns;
     }
 }
 
