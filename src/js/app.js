@@ -1,11 +1,11 @@
 function Game() {
-    this.board = [];
 
     this.intializeBoard = function() {
         createBoard();
         hookUpClickEvents();
     }
 
+    /* Board Creation Functions */
     createBoard = function() {
         const inMemoryBoard = createInMemoryBoard();
         createBoardInDom(inMemoryBoard);
@@ -45,6 +45,7 @@ function Game() {
             row.forEach(card => {
                 const cardDiv = document.createElement('div');
                 cardDiv.className = `card fa ${card} fa-4x`;
+                cardDiv.dataset.type = card;
                 rowDiv.appendChild(cardDiv);
             });
             boardDiv.appendChild(rowDiv);
@@ -52,13 +53,30 @@ function Game() {
         contentHolder.appendChild(boardDiv);
     }
 
+    firstCardPick = null;
+
+    /* Click Event */
     hookUpClickEvents = function() {
         var board = document.getElementById('game-board');
         board.addEventListener('click', function(e) {
-            if(!e.target.className.includes('card') || e.target.className.includes('selected')){
+
+            const selectedCard = e.target;
+            if(!selectedCard.className.includes('card') || selectedCard.className.includes('show')){
                 return;
             }
-            e.target.classList.add("selected");
+            selectedCard.classList.add("show");
+
+            if (firstCardPick == null) {
+                firstCardPick = e.target;
+            } else {
+                const firstType = firstCardPick.dataset.type;
+                const secondType = selectedCard.dataset.type;
+                if( firstType === secondType) {
+                    console.log('match');
+                } else {
+                    console.log('wrong');
+                }
+            }
         });
     }
 }

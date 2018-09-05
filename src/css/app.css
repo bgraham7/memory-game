@@ -22,6 +22,6 @@
     top: 25px;
 }
 
-.card.selected {
+.card.show {
     background-color: rgb(197, 23, 23);
 }
