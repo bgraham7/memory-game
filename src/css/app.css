@@ -13,8 +13,10 @@
     background-color: teal;
     width: 130px;
     height: 130px;
+    text-align:center;
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.card::before {
+    position: relative;
+    top: 25px;
 }

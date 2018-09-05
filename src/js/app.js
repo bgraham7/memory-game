@@ -2,30 +2,47 @@ function Game() {
     this.board = [];
 
     this.intializeBoard = function() {
-        //TODO HardCoding Cards to Start, Just Simple Numbers
+
         var contentHolder = document.getElementById('content')
 
-        this.board = [
-            [1, 2, 3, 4],
-            [5, 6, 7, 8],
-            [9, 10, 11, 12],
-            [13, 14, 15, 16]
-        ]
-
+        this.board = createInMemoryBoard();
         const boardDiv = document.createElement('div');
-        boardDiv.classList = ['game-board'];
+        boardDiv.className = 'game-board';
         this.board.forEach(row => {
             const rowDiv = document.createElement('div');
-            rowDiv.classList = ['card-row'];
+            rowDiv.className = 'card-row';
             row.forEach(card => {
                 const cardDiv = document.createElement('div');
-                cardDiv.classList = ['card'];
-                cardDiv.textContent = card.toString();
+                cardDiv.className = `card fa ${card} fa-4x`;
                 rowDiv.appendChild(cardDiv);
             });
             boardDiv.appendChild(rowDiv);
         });
         contentHolder.appendChild(boardDiv);
+    }
+
+    createInMemoryBoard = function() {
+        let board = [];
+        const cardTypeClasses = ['fa-birthday-cake', 'fa-space-shuttle', 'fa-car-side', 'fa-chess',
+                                'fa-crown', 'fa-frog', 'fa-grin', 'fa-kiwi-bird'];
+        const pairedTypes = cardTypeClasses.concat(cardTypeClasses);
+        shuffle(pairedTypes);
+        for(var x = 0; x < 4; x++) {
+            var row = [];
+            for(var y = 0; y < 4; y++) {
+                row.push(pairedTypes[(x * 4) + y]);
+            }
+            board.push(row);
+        }
+        return board;
+    }
+
+    shuffle = function(a) {
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
     }
 }
 
