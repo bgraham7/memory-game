@@ -111,6 +111,39 @@ body {
     top: 20%;
 }
 
+/* match / mismatch */
+.card.matched {
+    animation-name: match;
+    animation-duration: 1.5s;
+}
+
+.matched .front {
+    background-color: #6f5335;
+}
+
+@keyframes match {
+    0%   {transform: scale(1, 1);}
+    25%  {transform: scale(1.1, 1);}
+    50%  {transform: scale(1, 1.1);}
+    100% {transform: scale(1, 1);}
+}
+
+.card.mis-matched {
+    animation-name: mis-match;
+    animation-duration: .8s;
+}
+
+.mis-matched .front {
+    background-color: red;
+}
+
+@keyframes mis-match {
+    0%   {transform: skew(0,0)  rotate(0);}
+    25%  {transform: translateX(-10px) rotate(-10deg);}
+    50%  {transform: translateX(10px)  rotate(10deg);}
+    100% {transform: skew(0,0)  rotate(0);}
+}
+
 
 /* Winner Modal */
 #modal {

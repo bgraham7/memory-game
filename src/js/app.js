@@ -118,16 +118,25 @@ function Game() {
         const secondType = selectedCard.dataset.type;
         if( firstType === secondType) {
             state.matches++;
+            firstCardPick.classList.add('matched');
+            selectedCard.classList.add('matched');
             // Check for a win
             if(state.matches == 8) {
                 openWinModal();
             }
         } else {
+            firstCardPick.classList.add('mis-matched');
+            selectedCard.classList.add('mis-matched');
             const unflipHolder = firstCardPick;
             setTimeout(function() {
                 unflipHolder.classList.remove("show");
                 selectedCard.classList.remove("show");
             }, 800);
+            // Slightly longer timeout so cards remain styled during flip
+            setTimeout(function() {
+                unflipHolder.classList.remove("mis-matched");
+                selectedCard.classList.remove("mis-matched");
+            }, 1000);
         }
         firstCardPick = null;
     }
