@@ -7,6 +7,8 @@ function Game() {
             turns: 0,
             matches: 0
         }
+        const modal = document.getElementById('modal');
+        modal.classList.remove('open');
         updateStatusBar();
         createBoard();
         hookUpClickEvents();
@@ -118,8 +120,7 @@ function Game() {
             state.matches++;
             // Check for a win
             if(state.matches == 8) {
-                var modal = document.getElementById('modal');
-                modal.classList.add('open');
+                openWinModal();
             }
         } else {
             const unflipHolder = firstCardPick;
@@ -129,6 +130,22 @@ function Game() {
             }, 800);
         }
         firstCardPick = null;
+    }
+
+    openWinModal = function() {
+        const endMovesSpan = document.getElementById('end-moves');
+        endMovesSpan.innerText = state.turns;
+
+        const endStarsSpan = document.getElementById('end-stars');
+        const stars = document.getElementsByClassName('fa-star');
+        if(stars.length === 1) {
+            endStarsSpan.innerText = "1 star!";
+        } else {
+            endStarsSpan.innerText = stars.length + " stars!";
+        }
+
+        const modal = document.getElementById('modal');
+        modal.classList.add('open');
     }
     
 
@@ -153,8 +170,10 @@ const game = new Game();
 document.addEventListener("DOMContentLoaded", function(event) { 
     game.startGame();
 
-    const newGameButton = document.getElementById('reset-button');
-    newGameButton.addEventListener('click', function() {
-        game.startGame();
-    });
+    const newGameButtons = document.getElementsByClassName('new-game-btn');
+    for(var i = 0; i < newGameButtons.length; i++) {
+        newGameButtons[i].addEventListener('click', function() {
+            game.startGame();
+        });
+    }
 });

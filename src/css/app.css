@@ -13,8 +13,7 @@ body {
     margin-right: 20px;
 }
 
-#reset-button {
-    margin-left: 150px;
+.new-game-btn {
     padding: 10px 20px;
     background-color: orangered;
     color: white;
@@ -22,6 +21,10 @@ body {
     outline: none;
     border: none;
     box-shadow: 5px 5px 15px -5px rgba(0,0,0,1)
+}
+
+.stats .new-game-btn {
+    margin-left: 150px;
 }
 
 #game-board {
@@ -116,6 +119,7 @@ body {
     display: flex;
     justify-content: center;
     align-items:center;
+    flex-direction: column;
 }
 
 #modal.open {
