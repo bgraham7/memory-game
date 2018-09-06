@@ -18,20 +18,20 @@ function Game() {
     }
 
     /* Board Creation Functions */
-    createBoard = function() {
+    function createBoard() {
         const inMemoryBoard = createInMemoryBoard();
         createBoardInDom(inMemoryBoard);
     }
 
-    createInMemoryBoard = function() {
+    function createInMemoryBoard() {
         let board = [];
         const cardTypeClasses = ['fa-birthday-cake', 'fa-space-shuttle', 'fa-car', 'fa-snowflake-o',
                                 'fa-anchor', 'fa-bicycle', 'fa-diamond', 'fa-heartbeat'];
         const pairedTypes = cardTypeClasses.concat(cardTypeClasses);
         shuffle(pairedTypes);
-        for(var x = 0; x < 4; x++) {
-            var row = [];
-            for(var y = 0; y < 4; y++) {
+        for(let x = 0; x < 4; x++) {
+            let row = [];
+            for(let y = 0; y < 4; y++) {
                 row.push(pairedTypes[(x * 4) + y]);
             }
             board.push(row);
@@ -39,7 +39,7 @@ function Game() {
         return board;
     }
 
-    shuffle = function(a) {
+    function shuffle(a) {
         for (let i = a.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [a[i], a[j]] = [a[j], a[i]];
@@ -49,8 +49,8 @@ function Game() {
 
     let boardDiv = null;
 
-    createBoardInDom = function(board) {
-        var contentHolder = document.getElementById('content');
+    function createBoardInDom(board) {
+        let contentHolder = document.getElementById('content');
         // Clear old board if exists;
         if(boardDiv) {
             boardDiv.remove();
@@ -89,14 +89,14 @@ function Game() {
     
 
     /* Click Event */
-    hookUpClickEvents = function() {
+    function hookUpClickEvents() {
         boardDiv = document.getElementById('game-board');
         boardDiv.addEventListener('click', cardClickHandler);
     }
 
-    firstCardPick = null;
+    let firstCardPick = null;
     
-    cardClickHandler = function(e) {
+    function cardClickHandler(e) {
         const selectedCard = e.target.closest('.card');
         if(!selectedCard || selectedCard.className.includes('show')){
             return;
@@ -114,7 +114,7 @@ function Game() {
         boardDiv.addEventListener('click', cardClickHandler);
     }
 
-    checkPair = function(selectedCard) {
+    function checkPair(selectedCard) {
         state.turns++;
         updateStatusBar();
         const firstType = firstCardPick.dataset.type;
@@ -144,7 +144,7 @@ function Game() {
         firstCardPick = null;
     }
 
-    openWinModal = function() {
+    function openWinModal() {
         const endMovesSpan = document.getElementById('end-moves');
         endMovesSpan.innerText = state.turns;
 
@@ -155,9 +155,9 @@ function Game() {
         } else {
             endStarsSpan.innerText = stars.length + " stars!";
         }
-        var timeSpan = document.getElementById('end-time');
+        let timeSpan = document.getElementById('end-time');
         timer.stop();
-        var time = timer.getTime();
+        let time = timer.getTime();
         timeSpan.innerHTML = time;
 
         const modal = document.getElementById('modal');
@@ -165,7 +165,7 @@ function Game() {
     }
     
 
-    updateStatusBar = function() {
+    function updateStatusBar() {
         document.getElementById('turns').innerText = state.turns;
         const stars = document.getElementsByClassName('star');
         if(state.turns === 0) {
@@ -185,10 +185,10 @@ function Game() {
 /* Based on:
     https://codepen.io/cathydutton/pen/GBcvo */
 function Timer() {
-    var seconds = 0; 
-    var minutes = 0;
-    var secondsDiv = document.getElementById("seconds")
-    var minutesDiv = document.getElementById("minutes");
+    let seconds = 0; 
+    let minutes = 0;
+    let secondsDiv = document.getElementById("seconds")
+    let minutesDiv = document.getElementById("minutes");
 
     let interval;
 
@@ -207,7 +207,7 @@ function Timer() {
         return formatTime(minutes) + ":" + formatTime(seconds);
     }
 
-    const startTimer = function() {
+    function startTimer() {
         seconds++; 
         secondsDiv.innerHTML = formatTime(seconds);
         
@@ -220,7 +220,7 @@ function Timer() {
     }
 
     function formatTime(time) {
-        var formatted = "";
+        let formatted = "";
         if(time < 9){
             formatted =  "0" + time;
         }
@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     game.startGame();
 
     const newGameButtons = document.getElementsByClassName('new-game-btn');
-    for(var i = 0; i < newGameButtons.length; i++) {
+    for(let i = 0; i < newGameButtons.length; i++) {
         newGameButtons[i].addEventListener('click', function() {
             game.startGame();
         });
