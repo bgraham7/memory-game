@@ -44,12 +44,15 @@ function Game() {
 
     createBoardInDom = function(board) {
         var contentHolder = document.getElementById('content');
+        // 1) Create Board
         const boardDiv = document.createElement('div');
         boardDiv.id = 'game-board';
         board.forEach(row => {
+            // 2) Create Each Row
             const rowDiv = document.createElement('div');
             rowDiv.className = 'card-row';
             row.forEach(card => {
+                // 3) Create Each Card (card, flipper, front, back)
                 const cardDiv = document.createElement('div');
                 cardDiv.className = "card";
                 cardDiv.dataset.type = card;
@@ -89,35 +92,39 @@ function Game() {
         }
 
         boardDiv.removeEventListener('click', clickHandler);
-        selectedCard.classList.add("show");
 
+        selectedCard.classList.add("show");
         if (firstCardPick == null) {
             firstCardPick = selectedCard;
-            boardDiv.addEventListener('click', clickHandler);
         } else {
-            state.turns++;
-            updateDomWithState();
-            const firstType = firstCardPick.dataset.type;
-            const secondType = selectedCard.dataset.type;
-            if( firstType === secondType) {
-                state.matches++;
-                firstCardPick = null;
-                if(state.matches == 8) {
-                    var modal = document.getElementById('modal');
-                    modal.classList.add('open');
-                }
-
-                boardDiv.addEventListener('click', clickHandler);
-            } else {
-                setTimeout(function() {
-                    firstCardPick.classList.remove("show");
-                    selectedCard.classList.remove("show");
-                    firstCardPick = null;
-                    boardDiv.addEventListener('click', clickHandler);
-                }, 800);
-            }
+            checkPair(selectedCard);
         }
+
+        boardDiv.addEventListener('click', clickHandler);
     }
+
+    checkPair = function(selectedCard) {
+        state.turns++;
+        updateDomWithState();
+        const firstType = firstCardPick.dataset.type;
+        const secondType = selectedCard.dataset.type;
+        if( firstType === secondType) {
+            state.matches++;
+            // Check for a win
+            if(state.matches == 8) {
+                var modal = document.getElementById('modal');
+                modal.classList.add('open');
+            }
+        } else {
+            const unflipHolder = firstCardPick;
+            setTimeout(function() {
+                unflipHolder.classList.remove("show");
+                selectedCard.classList.remove("show");
+            }, 800);
+        }
+        firstCardPick = null;
+    }
+    
 
     updateDomWithState = function() {
         document.getElementById('turns').innerText = state.turns;
@@ -125,7 +132,6 @@ function Game() {
 }
 
 const game = new Game();
-
 document.addEventListener("DOMContentLoaded", function(event) { 
     game.intializeBoard();
 });
