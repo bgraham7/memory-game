@@ -1,7 +1,7 @@
 function Game() {
 
     let state;
-    let stopwatch;
+    let timer;
 
     this.startGame = function() {
         state = {
@@ -13,8 +13,8 @@ function Game() {
         updateStatusBar();
         createBoard();
         hookUpClickEvents();
-        stopwatch = new Timer();
-        stopwatch.start();
+        timer = new Timer();
+        timer.start();
     }
 
     /* Board Creation Functions */
@@ -155,6 +155,10 @@ function Game() {
         } else {
             endStarsSpan.innerText = stars.length + " stars!";
         }
+        var timeSpan = document.getElementById('end-time');
+        timer.stop();
+        var time = timer.getTime();
+        timeSpan.innerHTML = time;
 
         const modal = document.getElementById('modal');
         modal.classList.add('open');
@@ -199,28 +203,33 @@ function Timer() {
         clearInterval(interval);
     } 
 
+    this.getTime = function() {
+        return formatTime(minutes) + ":" + formatTime(seconds);
+    }
+
     const startTimer = function() {
         seconds++; 
-        
-        if(seconds < 9){
-           secondsDiv.innerHTML = "0" + seconds;
-        }
-        
-        if (seconds > 9){
-            secondsDiv.innerHTML = seconds;
-        } 
+        secondsDiv.innerHTML = formatTime(seconds);
         
         if (seconds > 59) {
           minutes++;
-          minutesDiv.innerHTML = "0" + minutes;
           seconds = 0;
           secondsDiv.innerHTML = "00";
+          minutesDiv.innerHTML = formatTime(minutes);
         }
-        
-        if (minutes > 9){
-            minutesDiv.innerHTML = minutes;
+    }
+
+    function formatTime(time) {
+        var formatted = "";
+        if(time < 9){
+            formatted =  "0" + time;
         }
-      }
+         
+         if (time > 9){
+            formatted = time.toString();
+        }
+        return formatted;
+    }
 }
 
 const game = new Game();

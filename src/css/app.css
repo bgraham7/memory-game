@@ -10,10 +10,6 @@ body {
     margin: 0 0 10px 0;
 }
 
-.stars {
-    margin-right: 20px;
-}
-
 .new-game-btn {
     padding: 10px 20px;
     background-color: #552C00;
@@ -26,10 +22,6 @@ body {
 
 .new-game-btn:active {
     box-shadow: 0 0 0 0 white;
-}
-
-.stats .new-game-btn {
-    margin-left: 20px;
 }
 
 #content {
@@ -56,11 +48,20 @@ body {
 
 .stats {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     font-size: 1.3em;
     font-weight:bold;
     margin-bottom: 10px;
+}
+
+.timer, .stars, .turns-wrapper, .new-button-wrapper {
+    width: 50%;
+}
+
+.timer, .new-button-wrapper {
+    text-align: right;
 }
 
 /* 
@@ -189,11 +190,19 @@ body {
         height: 110px;
     }
 
-    .stats .new-game-btn {
-        margin-left: 90px;
-    }
-
     .card .front {
         font-size: 4em;
+    }
+
+    .timer, .stars, .turns-wrapper, .new-button-wrapper {
+        width: 25%;
+    }
+
+    .new-button-wrapper {
+        order: 4;
+    }
+
+    .timer {
+        text-align: left;
     }
 }

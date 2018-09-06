@@ -10,16 +10,19 @@
 </head>
 <body>
     <main id="content">
-            <p><span id="minutes">00</span>:<span id="seconds">00</span></p>
+            
         <h1 class="title">Matching Game</h1>
         <div class="stats">
+            <div class="turns-wrapper">Turns: <span id="turns">0</span></div>
+            <div class="new-button-wrapper">
+                <button type="button" class="new-game-btn">New Game</button>
+            </div>
             <div class="stars">
                 <span class="fa fa-star star"></span>
                 <span class="fa fa-star star"></span>
                 <span class="fa fa-star star"></span>
             </div>
-            <div>Turns: <span id="turns">0</span></div>
-            <button type="button" class="new-game-btn">New Game</button>
+            <p class="timer"><span id="minutes">00</span>:<span id="seconds">00</span></p>
         </div>
     </main>
     
@@ -27,6 +30,7 @@
         <div class="modal-content">
             <h1>Congrats Rockstar! You did it!</h1>
             <p>It took you <span id="end-moves"></span> moves which is good for <span id="end-stars"></span></p>
+            <p>Here's your final time: <span id="end-time"></span></p>
             <button type="button" class="new-game-btn">New Game</button>
         </div>
     </div>
