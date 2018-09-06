@@ -68,7 +68,7 @@ function Game() {
                 const flipper = document.createElement('div');
                 flipper.className = 'flipper';
                 const front = document.createElement('div');
-                front.className = `front fa ${card} fa-4x`;
+                front.className = `front fa ${card}`;
                 flipper.appendChild(front);
                 const back = document.createElement('div');
                 back.className = 'back';
