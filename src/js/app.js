@@ -1,11 +1,13 @@
 function Game() {
 
-    let state = {
-        turns: 0,
-        matches: 0
-    }
+    let state;
 
-    this.intializeBoard = function() {
+    this.startGame = function() {
+        state = {
+            turns: 0,
+            matches: 0
+        }
+        updateStatusBar();
         createBoard();
         hookUpClickEvents();
     }
@@ -44,8 +46,12 @@ function Game() {
 
     createBoardInDom = function(board) {
         var contentHolder = document.getElementById('content');
+        // Clear old board if exists;
+        if(boardDiv) {
+            boardDiv.remove();
+        }
         // 1) Create Board
-        const boardDiv = document.createElement('div');
+        boardDiv = document.createElement('div');
         boardDiv.id = 'game-board';
         board.forEach(row => {
             // 2) Create Each Row
@@ -80,18 +86,18 @@ function Game() {
     /* Click Event */
     hookUpClickEvents = function() {
         boardDiv = document.getElementById('game-board');
-        boardDiv.addEventListener('click', clickHandler);
+        boardDiv.addEventListener('click', cardClickHandler);
     }
 
     firstCardPick = null;
     
-    clickHandler = function(e) {
+    cardClickHandler = function(e) {
         const selectedCard = e.target.closest('.card');
         if(!selectedCard || selectedCard.className.includes('show')){
             return;
         }
 
-        boardDiv.removeEventListener('click', clickHandler);
+        boardDiv.removeEventListener('click', cardClickHandler);
 
         selectedCard.classList.add("show");
         if (firstCardPick == null) {
@@ -100,11 +106,12 @@ function Game() {
             checkPair(selectedCard);
         }
 
-        boardDiv.addEventListener('click', clickHandler);
+        boardDiv.addEventListener('click', cardClickHandler);
     }
 
     checkPair = function(selectedCard) {
-        addTurn();
+        state.turns++;
+        updateStatusBar();
         const firstType = firstCardPick.dataset.type;
         const secondType = selectedCard.dataset.type;
         if( firstType === secondType) {
@@ -125,17 +132,18 @@ function Game() {
     }
     
 
-    addTurn = function() {
-        state.turns++;
+    updateStatusBar = function() {
         document.getElementById('turns').innerText = state.turns;
         const stars = document.getElementsByClassName('star');
-        if(state.turns > 12) {
+        if(state.turns === 0) {
+            stars[0].className = 'fa fa-star star';
+            stars[1].className = 'fa fa-star star';
+            stars[2].className = 'fa fa-star star';
+        } else if (state.turns === 13) {
             stars[2].className = 'fa fa-star-o star';
-        }
-        if (state.turns > 18) {
+        } else if (state.turns === 19) {
             stars[1].className = 'fa fa-star-o star';
-        }
-        if (state.turns > 24) {
+        } else if (state.turns === 25) {
             stars[0].className = 'fa fa-star-o star';
         }
     }
@@ -143,5 +151,10 @@ function Game() {
 
 const game = new Game();
 document.addEventListener("DOMContentLoaded", function(event) { 
-    game.intializeBoard();
+    game.startGame();
+
+    const newGameButton = document.getElementById('reset-button');
+    newGameButton.addEventListener('click', function() {
+        game.startGame();
+    });
 });
