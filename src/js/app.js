@@ -15,7 +15,7 @@ function Game() {
         hookUpClickEvents();
         timer = new Timer();
         timer.start();
-    }
+    };
 
     /* Board Creation Functions */
     function createBoard() {
@@ -197,15 +197,15 @@ function Timer() {
         interval = setInterval(startTimer, 1000);
         secondsDiv.innerHTML = "00";
         minutesDiv.innerHTML = "00";
-     }
+    };
 
     this.stop = function() {
         clearInterval(interval);
-    } 
+    };
 
     this.getTime = function() {
         return formatTime(minutes) + ":" + formatTime(seconds);
-    }
+    };
 
     function startTimer() {
         seconds++; 
