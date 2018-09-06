@@ -1,6 +1,6 @@
 function Game() {
 
-    state = {
+    let state = {
         turns: 0,
         matches: 0
     }
@@ -18,8 +18,8 @@ function Game() {
 
     createInMemoryBoard = function() {
         let board = [];
-        const cardTypeClasses = ['fa-birthday-cake', 'fa-space-shuttle', 'fa-car-side', 'fa-chess',
-                                'fa-crown', 'fa-frog', 'fa-grin', 'fa-kiwi-bird'];
+        const cardTypeClasses = ['fa-birthday-cake', 'fa-space-shuttle', 'fa-car', 'fa-snowflake-o',
+                                'fa-anchor', 'fa-bicycle', 'fa-diamond', 'fa-heartbeat'];
         const pairedTypes = cardTypeClasses.concat(cardTypeClasses);
         shuffle(pairedTypes);
         for(var x = 0; x < 4; x++) {
@@ -40,7 +40,7 @@ function Game() {
         return a;
     }
 
-    boardDiv = null;
+    let boardDiv = null;
 
     createBoardInDom = function(board) {
         var contentHolder = document.getElementById('content');
@@ -104,8 +104,7 @@ function Game() {
     }
 
     checkPair = function(selectedCard) {
-        state.turns++;
-        updateDomWithState();
+        addTurn();
         const firstType = firstCardPick.dataset.type;
         const secondType = selectedCard.dataset.type;
         if( firstType === secondType) {
@@ -126,8 +125,19 @@ function Game() {
     }
     
 
-    updateDomWithState = function() {
+    addTurn = function() {
+        state.turns++;
         document.getElementById('turns').innerText = state.turns;
+        const stars = document.getElementsByClassName('star');
+        if(state.turns > 12) {
+            stars[2].className = 'fa fa-star-o star';
+        }
+        if (state.turns > 18) {
+            stars[1].className = 'fa fa-star-o star';
+        }
+        if (state.turns > 24) {
+            stars[0].className = 'fa fa-star-o star';
+        }
     }
 }
 

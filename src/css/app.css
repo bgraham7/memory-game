@@ -1,6 +1,32 @@
+body {
+    font-family: sans-serif;
+}
+
+.title {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    margin: 0 0 10px 0;
+}
+
+.stars {
+    margin-right: 20px;
+}
+
+#reset-button {
+    margin-left: 150px;
+    padding: 10px 20px;
+    background-color: orangered;
+    color: white;
+    border-radius: 8px;
+    outline: none;
+    border: none;
+    box-shadow: 5px 5px 15px -5px rgba(0,0,0,1)
+}
+
 #game-board {
     width: 600px;
-    margin: 20px auto;
+    margin: 10px auto;
     perspective: 1000px;
 }
 
@@ -18,6 +44,7 @@
 .stats {
     display: flex;
     justify-content: center;
+    align-items: center;
     font-size: 1.3em;
     font-weight:bold;
 }
