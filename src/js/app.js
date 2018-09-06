@@ -1,17 +1,20 @@
 function Game() {
 
     let state;
+    let stopwatch;
 
     this.startGame = function() {
         state = {
             turns: 0,
             matches: 0
-        }
+        };
         const modal = document.getElementById('modal');
         modal.classList.remove('open');
         updateStatusBar();
         createBoard();
         hookUpClickEvents();
+        stopwatch = new Timer();
+        stopwatch.start();
     }
 
     /* Board Creation Functions */
@@ -177,7 +180,7 @@ function Game() {
 
 /* Based on:
     https://codepen.io/cathydutton/pen/GBcvo */
-function StopWatch() {
+function Timer() {
     var seconds = 0; 
     var minutes = 0;
     var secondsDiv = document.getElementById("seconds")
@@ -188,17 +191,13 @@ function StopWatch() {
     this.start = function() {
         clearInterval(interval);
         interval = setInterval(startTimer, 1000);
+        secondsDiv.innerHTML = "00";
+        minutesDiv.innerHTML = "00";
      }
 
     this.stop = function() {
         clearInterval(interval);
     } 
-
-    this.restart = function() {
-        clearInterval(interval);
-        secondsDiv.innerHTML = "00";
-        minutesDiv.innerHTML = "00";
-     }
 
     const startTimer = function() {
         seconds++; 
@@ -225,10 +224,9 @@ function StopWatch() {
 }
 
 const game = new Game();
-const stopwatch = new StopWatch();
+
 document.addEventListener("DOMContentLoaded", function(event) { 
     game.startGame();
-    stopwatch.start();
 
     const newGameButtons = document.getElementsByClassName('new-game-btn');
     for(var i = 0; i < newGameButtons.length; i++) {
