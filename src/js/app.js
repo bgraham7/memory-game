@@ -175,9 +175,60 @@ function Game() {
     }
 }
 
+/* Based on:
+    https://codepen.io/cathydutton/pen/GBcvo */
+function StopWatch() {
+    var seconds = 0; 
+    var minutes = 0;
+    var secondsDiv = document.getElementById("seconds")
+    var minutesDiv = document.getElementById("minutes");
+
+    let interval;
+
+    this.start = function() {
+        clearInterval(interval);
+        interval = setInterval(startTimer, 1000);
+     }
+
+    this.stop = function() {
+        clearInterval(interval);
+    } 
+
+    this.restart = function() {
+        clearInterval(interval);
+        secondsDiv.innerHTML = "00";
+        minutesDiv.innerHTML = "00";
+     }
+
+    const startTimer = function() {
+        seconds++; 
+        
+        if(seconds < 9){
+           secondsDiv.innerHTML = "0" + seconds;
+        }
+        
+        if (seconds > 9){
+            secondsDiv.innerHTML = seconds;
+        } 
+        
+        if (seconds > 59) {
+          minutes++;
+          minutesDiv.innerHTML = "0" + minutes;
+          seconds = 0;
+          secondsDiv.innerHTML = "00";
+        }
+        
+        if (minutes > 9){
+            minutesDiv.innerHTML = minutes;
+        }
+      }
+}
+
 const game = new Game();
+const stopwatch = new StopWatch();
 document.addEventListener("DOMContentLoaded", function(event) { 
     game.startGame();
+    stopwatch.start();
 
     const newGameButtons = document.getElementsByClassName('new-game-btn');
     for(var i = 0; i < newGameButtons.length; i++) {
