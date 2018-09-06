@@ -87,7 +87,7 @@ function Game() {
     
     clickHandler = function(e) {
         const selectedCard = e.target.closest('.card');
-        if(selectedCard.className.includes('show')){
+        if(!selectedCard || selectedCard.className.includes('show')){
             return;
         }
 
